@@ -4,7 +4,7 @@ A smart tool for creating comprehensive digests of source code repositories, des
 
 ## Overview
 
-SourceCodeFlatener is a bash-based utility that generates a flattened representation of a code repository. It can process both local directories and remote Git repositories, creating a markdown document that contains the structure and content of your codebase in an easily digestible format. This tool is particularly useful for:
+SourceCodeFlatener is a utility that generates a flattened representation of a code repository. Available in Bash, Python, C#, and PowerShell implementations, it can process both local directories and remote Git repositories, creating a markdown document that contains the structure and content of your codebase in an easily digestible format. This tool is particularly useful for:
 
 - Code reviews and audits
 - Documentation generation
@@ -25,18 +25,104 @@ SourceCodeFlatener is a bash-based utility that generates a flattened representa
 - Special handling for markdown files (stripping formatting when needed)
 - Repository summary statistics (files analyzed, directories scanned, total size, estimated tokens)
 
+## Project Structure
+
+The project is organized into the following directories:
+
+```
+.
+├── flattener.sh       # Main launcher script
+├── README.md         # This documentation
+├── LICENSE           # MIT License
+├── bash/             # Bash implementation
+│   └── code_digest.sh
+├── python/           # Python implementation
+│   └── code_digest.py
+├── csharp/           # C# implementation
+│   ├── CodeDigest.cs
+│   └── CodeDigest.csproj
+└── powershell/       # PowerShell implementation
+    └── code_digest.ps1
+```
+
 ## Installation
 
-No installation required! Simply download the `code_digest.sh` script and make it executable:
+Clone the repository or download the source files. The unified launcher script makes it easy to use any implementation:
 
 ```bash
-chmod +x code_digest.sh
+# Clone the repository
+git clone https://github.com/username/SourceCodeFlatener.git
+cd SourceCodeFlatener
+
+# Make the launcher and implementation scripts executable
+chmod +x flattener.sh bash/code_digest.sh python/code_digest.py
 ```
+
+### Language-Specific Setup
+
+#### Bash Implementation
+No additional setup required!
+
+#### Python Implementation
+Requires Python 3.6+.
+
+#### C# Implementation
+Requires .NET 6.0+. Build the solution:
+
+```bash
+cd csharp
+dotnet build
+```
+
+#### PowerShell Implementation
+Requires PowerShell Core (pwsh).
 
 ## Usage
 
+### Unified Launcher
+
+The easiest way to use SourceCodeFlatener is through the unified launcher script:
+
 ```bash
-./code_digest.sh -s <source> -o <output_file> [options]
+# Use the default (bash) implementation
+./flattener.sh -s <source> -o <output_file> [options]
+
+# Specify an implementation
+./flattener.sh python -s <source> -o <output_file> [options]
+./flattener.sh csharp -s <source> -o <output_file> [options]
+./flattener.sh powershell -s <source> -o <output_file> [options]
+
+# Show help for a specific implementation
+./flattener.sh python
+```
+
+### Direct Usage
+
+You can also run each implementation directly:
+
+#### Bash
+```bash
+./bash/code_digest.sh -s <source> -o <output_file> [options]
+```
+
+#### Python
+```bash
+python3 python/code_digest.py -s <source> -o <output_file> [options]
+# or if made executable:
+./python/code_digest.py -s <source> -o <output_file> [options]
+```
+
+#### C#
+```bash
+cd csharp
+dotnet run -- -s <source> -o <output_file> [options]
+# or if published:
+./CodeDigest -s <source> -o <output_file> [options]
+```
+
+#### PowerShell
+```bash
+pwsh -File powershell/code_digest.ps1 -Source <source> -OutputFile <output_file> [options]
 ```
 
 ### Parameters
@@ -54,17 +140,17 @@ chmod +x code_digest.sh
 
 #### Process a local directory:
 ```bash
-./code_digest.sh -s /path/to/your/project -o project_digest.md -n "My Project"
+./flattener.sh -s /path/to/your/project -o project_digest.md -n "My Project"
 ```
 
-#### Process a remote Git repository:
+#### Process a remote Git repository with Python implementation:
 ```bash
-./code_digest.sh -s https://github.com/username/repo.git -o repo_digest.md -b main
+./flattener.sh python -s https://github.com/username/repo.git -o repo_digest.md -b main
 ```
 
-#### Customize file patterns:
+#### Customize file patterns with C# implementation:
 ```bash
-./code_digest.sh -s /path/to/project -o digest.md -i "*.py,*.js" -e "tests/*,docs/*"
+./flattener.sh csharp -s /path/to/project -o digest.md -i "*.py,*.js" -e "tests/*,docs/*"
 ```
 
 ## Output Format
@@ -83,26 +169,45 @@ For large codebases, the output will be automatically split into multiple files 
 ### Creating Documentation for a Project
 
 ```bash
-./code_digest.sh -s /path/to/project -o docs/project_documentation.md -n "Project Documentation"
+./flattener.sh -s /path/to/project -o docs/project_documentation.md -n "Project Documentation"
 ```
 
 ### Sharing Code with Collaborators
 
 ```bash
-./code_digest.sh -s /path/to/module -o shared/module_code.md -i "src/*.py,tests/*.py" -e "*.pyc,__pycache__/*"
+./flattener.sh -s /path/to/module -o shared/module_code.md -i "src/*.py,tests/*.py" -e "*.pyc,__pycache__/*"
 ```
 
 ### Generating a Codebase Snapshot
 
 ```bash
-./code_digest.sh -s https://github.com/username/repo.git -o snapshots/repo_$(date +%Y%m%d).md -b develop
+./flattener.sh -s https://github.com/username/repo.git -o snapshots/repo_$(date +%Y%m%d).md -b develop
+```
+
+### Comparing Implementation Performance
+
+You can easily compare the performance of different implementations on the same codebase:
+
+```bash
+time ./flattener.sh bash -s /path/to/project -o output_bash.md
+time ./flattener.sh python -s /path/to/project -o output_python.md
+time ./flattener.sh csharp -s /path/to/project -o output_csharp.md
 ```
 
 ## Requirements
 
+### Bash Implementation
 - Bash shell
 - Git (for cloning repositories)
 - Python 3 (for relative path calculations)
+
+### Python Implementation
+- Python 3.6+
+- Git (for cloning repositories)
+
+### C# Implementation
+- .NET 6.0+
+- Git (for cloning repositories)
 
 ## License
 
