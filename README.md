@@ -31,31 +31,30 @@ The project is organized into the following directories:
 
 ```
 .
-├── flattener.sh       # Main launcher script
 ├── README.md         # This documentation
 ├── LICENSE           # MIT License
 ├── bash/             # Bash implementation
-│   └── code_digest.sh
+│   └── CodeFlatener.sh
 ├── python/           # Python implementation
-│   └── code_digest.py
+│   └── CodeFlatener.py
 ├── csharp/           # C# implementation
 │   ├── CodeDigest.cs
 │   └── CodeDigest.csproj
 └── powershell/       # PowerShell implementation
-    └── code_digest.ps1
+    └── CodeFlatener.ps1
 ```
 
 ## Installation
 
-Clone the repository or download the source files. The unified launcher script makes it easy to use any implementation:
+Clone the repository or download the source files:
 
 ```bash
 # Clone the repository
 git clone https://github.com/username/SourceCodeFlatener.git
 cd SourceCodeFlatener
 
-# Make the launcher and implementation scripts executable
-chmod +x flattener.sh bash/code_digest.sh python/code_digest.py
+# Make the implementation scripts executable
+chmod +x bash/CodeFlatener.sh python/CodeFlatener.py
 ```
 
 ### Language-Specific Setup
@@ -79,37 +78,20 @@ Requires PowerShell Core (pwsh).
 
 ## Usage
 
-### Unified Launcher
-
-The easiest way to use SourceCodeFlatener is through the unified launcher script:
-
-```bash
-# Use the default (bash) implementation
-./flattener.sh -s <source> -o <output_file> [options]
-
-# Specify an implementation
-./flattener.sh python -s <source> -o <output_file> [options]
-./flattener.sh csharp -s <source> -o <output_file> [options]
-./flattener.sh powershell -s <source> -o <output_file> [options]
-
-# Show help for a specific implementation
-./flattener.sh python
-```
-
-### Direct Usage
+### Usage
 
 You can also run each implementation directly:
 
 #### Bash
 ```bash
-./bash/code_digest.sh -s <source> -o <output_file> [options]
+./bash/CodeFlatener.sh -s <source> -o <output_file> [options]
 ```
 
 #### Python
 ```bash
-python3 python/code_digest.py -s <source> -o <output_file> [options]
+python3 python/CodeFlatener.py -s <source> -o <output_file> [options]
 # or if made executable:
-./python/code_digest.py -s <source> -o <output_file> [options]
+./python/CodeFlatener.py -s <source> -o <output_file> [options]
 ```
 
 #### C#
@@ -122,7 +104,7 @@ dotnet run -- -s <source> -o <output_file> [options]
 
 #### PowerShell
 ```bash
-pwsh -File powershell/code_digest.ps1 -Source <source> -OutputFile <output_file> [options]
+pwsh -File powershell/CodeFlatener.ps1 -Source <source> -OutputFile <output_file> [options]
 ```
 
 ### Parameters
@@ -138,19 +120,19 @@ pwsh -File powershell/code_digest.ps1 -Source <source> -OutputFile <output_file>
 
 ### Examples
 
-#### Process a local directory:
+#### Process a local directory with Bash:
 ```bash
-./flattener.sh -s /path/to/your/project -o project_digest.md -n "My Project"
+./bash/CodeFlatener.sh -s /path/to/your/project -o project_digest.md -n "My Project"
 ```
 
-#### Process a remote Git repository with Python implementation:
+#### Process a remote Git repository with Python:
 ```bash
-./flattener.sh python -s https://github.com/username/repo.git -o repo_digest.md -b main
+python3 python/CodeFlatener.py -s https://github.com/username/repo.git -o repo_digest.md -b main
 ```
 
-#### Customize file patterns with C# implementation:
+#### Customize file patterns with C#:
 ```bash
-./flattener.sh csharp -s /path/to/project -o digest.md -i "*.py,*.js" -e "tests/*,docs/*"
+dotnet csharp/bin/Debug/net6.0/CodeDigest.dll -s /path/to/project -o digest.md -i "*.py,*.js" -e "tests/*,docs/*"
 ```
 
 ## Output Format
@@ -169,19 +151,19 @@ For large codebases, the output will be automatically split into multiple files 
 ### Creating Documentation for a Project
 
 ```bash
-./flattener.sh -s /path/to/project -o docs/project_documentation.md -n "Project Documentation"
+./bash/CodeFlatener.sh -s /path/to/project -o docs/project_documentation.md -n "Project Documentation"
 ```
 
 ### Sharing Code with Collaborators
 
 ```bash
-./flattener.sh -s /path/to/module -o shared/module_code.md -i "src/*.py,tests/*.py" -e "*.pyc,__pycache__/*"
+./bash/CodeFlatener.sh -s /path/to/module -o shared/module_code.md -i "src/*.py,tests/*.py" -e "*.pyc,__pycache__/*"
 ```
 
 ### Generating a Codebase Snapshot
 
 ```bash
-./flattener.sh -s https://github.com/username/repo.git -o snapshots/repo_$(date +%Y%m%d).md -b develop
+./bash/CodeFlatener.sh -s https://github.com/username/repo.git -o snapshots/repo_$(date +%Y%m%d).md -b develop
 ```
 
 ### Comparing Implementation Performance
@@ -189,9 +171,9 @@ For large codebases, the output will be automatically split into multiple files 
 You can easily compare the performance of different implementations on the same codebase:
 
 ```bash
-time ./flattener.sh bash -s /path/to/project -o output_bash.md
-time ./flattener.sh python -s /path/to/project -o output_python.md
-time ./flattener.sh csharp -s /path/to/project -o output_csharp.md
+time ./bash/CodeFlatener.sh -s /path/to/project -o output_bash.md
+time python3 python/CodeFlatener.py -s /path/to/project -o output_python.md
+time dotnet csharp/bin/Debug/net6.0/CodeDigest.dll -s /path/to/project -o output_csharp.md
 ```
 
 ## Requirements
